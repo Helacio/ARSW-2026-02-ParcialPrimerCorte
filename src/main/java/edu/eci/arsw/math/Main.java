@@ -5,6 +5,8 @@
  */
 package edu.eci.arsw.math;
 
+import edu.eci.arsw.math.concurrency.FindPiDigits;
+
 import java.util.Arrays;
 
 /**
@@ -14,9 +16,22 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String a[]) {
-        System.out.println(bytesToHex(PiDigits.getDigits(0, 10)));
-        System.out.println(bytesToHex(PiDigits.getDigits(1, 100)));
-        System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000)));
+       // System.out.println(bytesToHex(PiDigits.getDigits(0, 10)));
+        //System.out.println(bytesToHex(PiDigits.getDigits(1, 100)));
+        //System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000)));
+
+        System.out.println("---------------------");
+        System.out.println("----- Probando mi clase FindPiDigts que hereda de Thread-----");
+        System.out.println("----- Iniciando hilo.... ----");
+        Thread findPiDigitsMine = new FindPiDigits(0, 1000);
+        findPiDigitsMine.start();
+        try{
+        findPiDigitsMine.sleep(500);} catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        System.out.println(((FindPiDigits) findPiDigitsMine).getDigits());
+
+
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -31,7 +46,7 @@ public class Main {
         StringBuilder sb=new StringBuilder();
         for (int i=0;i<hexChars.length;i=i+2){
             //sb.append(hexChars[i]);
-            sb.append(hexChars[i+1]);            
+            sb.append(hexChars[i+1]);
         }
         return sb.toString();
     }
